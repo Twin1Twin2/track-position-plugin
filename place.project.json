@@ -1,0 +1,16 @@
+{
+  "name": "track-position-plugin",
+  "tree": {
+    "$className": "DataModel",
+    "ServerStorage": {
+      "$className": "ServerStorage",
+      "TrackPositionPlugin": {
+        "$className": "Folder",
+        "$path": "src",
+        "packages": {
+          "$path": "Packages"
+        }
+      }
+    }
+  }
+}

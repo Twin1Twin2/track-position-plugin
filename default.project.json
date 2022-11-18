@@ -1,0 +1,13 @@
+{
+  "name": "TrackPositionPlugin",
+  "globIgnorePaths": [
+    "**/*story.lua"
+  ],
+  "tree": {
+    "$className": "Folder",
+    "$path": "src",
+    "packages": {
+      "$path": "Packages"
+    }
+  }
+}
