@@ -19,22 +19,21 @@ return function(frame: Frame): () -> ()
 		-- rodux.loggerMiddleware
 	})
 
-	store:dispatch(pluginState.setPluginEnabled(true))
-
 	local rootNode = plasma.new(frame)
 
-	local heartbeatConnection = RunService.Heartbeat:Connect(function(deltaTime: number)
+	local heartbeatConnection = RunService.Heartbeat:Connect(function(_deltaTime: number)
 		plasma.start(rootNode, function()
-			local enabled, setEnabled = plasma.useState(false)
+			local state = store:getState()
+			local pluginEnabled = state.pluginEnabled
 
 			container(function()
-				if plasma.button("Toggle Enabled: " .. tostring(enabled)):clicked() then
-					setEnabled(not enabled)
+				if plasma.button("Toggle Enabled: " .. tostring(pluginEnabled)):clicked() then
+					store:dispatch(pluginState.setPluginEnabled(not pluginEnabled))
 				end
 
 				plasma.space()
 
-				if enabled then
+				if pluginEnabled then
 					app(store)
 				end
 			end)
