@@ -142,7 +142,7 @@ return plasma.widget(function(store)
 		store:dispatch(trackPositionActions.setIsVisible(not currentIsVisible))
 	end
 
-	if currentIsVisible == true and currentTrackData ~= nil then
+	if state.pluginEnabled and currentIsVisible == true and currentTrackData ~= nil then
 		-- get cframe positions
 		local track = currentTrackData.track
 		local trackPositionCFrame = track:getCFrame(currentTrackPosition)

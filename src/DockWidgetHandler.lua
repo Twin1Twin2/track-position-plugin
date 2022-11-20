@@ -5,6 +5,8 @@ local packages = script.Parent.packages
 local plasma = require(packages.plasma)
 local rodux = require(packages.rodux)
 
+local pluginState = require(script.Parent.pluginState)
+
 local modules = script.Parent.modules
 local Maid = require(modules.Maid)
 
@@ -81,6 +83,8 @@ function DockWidgetHandler:enable()
 		self:_createGui()
 	end
 
+	self.store:dispatch(pluginState.setPluginEnabled(true))
+
 	local heartbeatConnection = RunService.Heartbeat:Connect(function(_deltaTime: number)
 		plasma.start(self.node, function()
 			self.widget(self.store)
@@ -99,6 +103,8 @@ function DockWidgetHandler:disable()
 	end
 
 	self.maid.updateConnection = nil
+
+	self.store:dispatch(pluginState.setPluginEnabled(false))
 	plasma.start(self.node, function()
 		self.widget(self.store)
 	end)

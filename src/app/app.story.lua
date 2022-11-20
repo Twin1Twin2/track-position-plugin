@@ -6,6 +6,8 @@ local packages = root.packages
 local plasma = require(packages.plasma)
 local rodux = require(packages.rodux)
 
+local pluginState = require(root.pluginState)
+
 local app = require(script.Parent.app)
 local stateModule = require(script.Parent.state)
 
@@ -16,6 +18,8 @@ return function(frame: Frame): () -> ()
 	local store = rodux.Store.new(stateModule.reducer, nil, {
 		-- rodux.loggerMiddleware
 	})
+
+	store:dispatch(pluginState.setPluginEnabled(true))
 
 	local rootNode = plasma.new(frame)
 
