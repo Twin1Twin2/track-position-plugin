@@ -8,11 +8,16 @@ version = "0.4.2"
 dependencies = [["TestEZ", "roblox/testez@0.4.1"]]
 
 [[package]]
-name = "gabrielconcepcion/test-plasma-plugin"
-version = "0.1.0"
-dependencies = [["plasma", "evaera/plasma@0.4.2"]]
+name = "roblox/rodux"
+version = "3.0.0"
+dependencies = []
 
 [[package]]
 name = "roblox/testez"
 version = "0.4.1"
 dependencies = []
+
+[[package]]
+name = "theepictwin/track-position-plugin"
+version = "0.1.0"
+dependencies = [["plasma", "evaera/plasma@0.4.2"], ["rodux", "roblox/rodux@3.0.0"]]
