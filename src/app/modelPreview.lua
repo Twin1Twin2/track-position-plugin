@@ -9,6 +9,10 @@ return plasma.widget(function(model: Model, cframe: CFrame)
 			local clonedModel = model:Clone()
 			clonedModel.Archivable = false
 
+			if clonedModel:IsA("BasePart") then
+				clonedModel.Locked = true
+			end
+
 			for _, child in ipairs(clonedModel:GetDescendants()) do
 				if child:IsA("BasePart") then
 					child.Locked = true
