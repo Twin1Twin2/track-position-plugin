@@ -56,6 +56,13 @@ actionHandlers.SetTrackData = function(state: TrackPositionState, action)
 
 	state.trackData = action.trackData
 
+	if state.trackData ~= nil then
+		return actionHandlers.ResetTrackHandlesPosition(
+			state,
+			actions.resetTrackHandlesPosition()
+		)
+	end
+
 	return state
 end
 
