@@ -19,5 +19,5 @@ dependencies = []
 
 [[package]]
 name = "theepictwin/track-position-plugin"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [["plasma", "evaera/plasma@0.4.2"], ["rodux", "roblox/rodux@3.0.0"]]
