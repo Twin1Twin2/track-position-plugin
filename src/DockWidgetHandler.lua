@@ -140,7 +140,6 @@ function DockWidgetHandler:_createGui()
 	gui.ZIndexBehavior = Enum.ZIndexBehavior.Global
 
 	gui:BindToClose(function()
-		print("Closing!")
 		self:disable()
 	end)
 
