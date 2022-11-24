@@ -3,7 +3,10 @@ local root = script.Parent.Parent
 local packages = root.packages
 local plasma = require(packages.plasma)
 
-return plasma.widget(function(model: Model, cframe: CFrame)
+local pluginActions = root.pluginActions
+local positionModel = require(pluginActions.positionModel)
+
+return plasma.widget(function(model: Model, cframe: CFrame, positionModelType: number)
 	plasma.portal(workspace.CurrentCamera, function()
 		local refs = plasma.useInstance(function(ref)
 			local clonedModel = model:Clone()
@@ -24,11 +27,17 @@ return plasma.widget(function(model: Model, cframe: CFrame)
 			return clonedModel
 		end)
 
-		local clonedModel = refs.model
-		plasma.useEffect(function()
-			if clonedModel then
-				clonedModel:PivotTo(cframe)
+		local clonedModel = refs.model :: PVInstance
+
+		local function updateModel()
+			if clonedModel == nil then
+				return
 			end
-		end, cframe)
+
+			positionModel.position(clonedModel, cframe, positionModelType)
+		end
+
+		plasma.useEffect(updateModel, cframe)
+		plasma.useEffect(updateModel, positionModelType)
 	end)
 end)

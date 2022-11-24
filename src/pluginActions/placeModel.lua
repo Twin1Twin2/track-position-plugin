@@ -1,12 +1,15 @@
 
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
 
+local positionModel = require(script.Parent.positionModel)
+
 local root = script.Parent.Parent
 
 local modules = root.modules
 local Result = require(modules.Result)
 
-return function(model: PVInstance, cframe: CFrame, parent: Instance?)
+return function(model: PVInstance, cframe: CFrame, positionModelType: number?, parent: Instance?)
+	positionModelType = if positionModelType == nil then positionModel.PositionModelType.Normal else positionModelType
 	parent = parent or workspace
 
 	if model == nil then
@@ -16,7 +19,7 @@ return function(model: PVInstance, cframe: CFrame, parent: Instance?)
 	end
 
 	local clonedModel = model:Clone()
-	clonedModel:PivotTo(cframe)
+	positionModel.position(clonedModel, cframe, positionModelType)
 	clonedModel.Parent = parent
 
 	ChangeHistoryService:SetWaypoint("PlaceModel")

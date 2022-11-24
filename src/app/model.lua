@@ -16,6 +16,10 @@ local modelPreview = require(script.Parent.modelPreview)
 local pluginActions = root.pluginActions
 local pvInstanceFromSelection = require(pluginActions.pvInstanceFromSelection)
 local getSelection = require(pluginActions.getSelection)
+
+local positionModel = require(pluginActions.positionModel)
+local PositionModelType = positionModel.PositionModelType
+
 local placeModel = require(pluginActions.placeModel)
 
 return plasma.widget(function(store)
@@ -96,6 +100,36 @@ return plasma.widget(function(store)
 		store:dispatch(modelActions.setShowPreview(not showPreview))
 	end
 
+	local positionModelType, setPositionModelType = plasma.useState(PositionModelType.Normal)
+
+	local useLookVectorCheckbox = plasma.checkbox("Use Look Vector", {
+		disabled = false,
+		checked = positionModelType == PositionModelType.UseLookVector,
+	})
+
+	if useLookVectorCheckbox:clicked() then
+		-- store:dispatch(modelActions.setShowPreview(not useLookVector))
+		if positionModelType == PositionModelType.UseLookVector then
+			setPositionModelType(PositionModelType.Normal)
+		else
+			setPositionModelType(PositionModelType.UseLookVector)
+		end
+	end
+
+	local useVerticalCheckbox = plasma.checkbox("Use Vertical", {
+		disabled = false,
+		checked = positionModelType == PositionModelType.UseVertical,
+	})
+
+	if useVerticalCheckbox:clicked() then
+		-- store:dispatch(modelActions.setShowPreview(not useVertical))
+		if positionModelType == PositionModelType.UseVertical then
+			setPositionModelType(PositionModelType.Normal)
+		else
+			setPositionModelType(PositionModelType.UseVertical)
+		end
+	end
+
 	plasma.space(10)
 
 	buttonRow({
@@ -114,7 +148,12 @@ return plasma.widget(function(store)
 			local track = currentTrackData.track
 			local trackPositionCFrame = track:getCFrame(currentTrackPosition)
 
-			placeModel(currentModel, trackPositionCFrame, currentModelParent)
+			placeModel(
+				currentModel,
+				trackPositionCFrame,
+				positionModelType,
+				currentModelParent
+			)
 		end
 	end)
 
@@ -124,7 +163,7 @@ return plasma.widget(function(store)
 		local trackPositionCFrame = track:getCFrame(currentTrackPosition)
 
 		if showPreview and currentModel ~= nil then
-			modelPreview(currentModel, trackPositionCFrame)
+			modelPreview(currentModel, trackPositionCFrame, positionModelType)
 		end
 	end
 
