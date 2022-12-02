@@ -14,6 +14,9 @@ local MenuState = menuStateModule.MenuState
 
 local trackPositionActions = stateModule.trackPosition.actions
 
+local pluginActions = root.pluginActions
+local focusCamera = require(pluginActions.focusCamera)
+
 local widgets = script.Parent.widgets
 local selectedText = require(widgets.selectedText)
 local button = require(widgets.button)
@@ -165,6 +168,15 @@ return plasma.widget(function(store)
 
 	if isVisibleCheckbox:clicked() then
 		store:dispatch(trackPositionActions.setIsVisible(not currentIsVisible))
+	end
+
+	plasma.space(0)
+
+	if button("Focus Camera To Cursor"):clicked() and currentTrackData ~= nil then
+		local track = currentTrackData.track
+		local trackPositionCFrame = track:getCFrame(currentTrackPosition)
+
+		focusCamera(trackPositionCFrame)
 	end
 
 	if state.pluginEnabled and currentIsVisible == true and currentTrackData ~= nil then
