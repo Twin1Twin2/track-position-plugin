@@ -13,7 +13,7 @@ return plasma.widget(function(fn, options)
 			[ref] = "frame",
 			BackgroundTransparency = 1,
 			Position = UDim2.new(0, 0, 0, 0),
-			Size = UDim2.new(1, 0, 1, 0),
+			Size = UDim2.new(1, 0, 0, 100),
 
 			plasma.create("UIPadding", {
 				PaddingTop = UDim.new(0, 10),
@@ -23,12 +23,23 @@ return plasma.widget(function(fn, options)
 			}),
 
 			plasma.create("UIListLayout", {
+				[ref] = "listLayout",
+
 				SortOrder = Enum.SortOrder.LayoutOrder,
-				FillDirection = options.direction or Enum.FillDirection.Vertical,
+				FillDirection = Enum.FillDirection.Vertical,
 				Padding = UDim.new(0, padding),
 			}),
 		})
 	end)
+
+	local frame = refs.frame :: Frame
+	local listLayout = refs.listLayout :: UIListLayout
+
+	local frameHeight = listLayout.AbsoluteContentSize.Y + 10
+
+	plasma.useEffect(function()
+		frame.Size = UDim2.new(1, 0, 0, frameHeight)
+	end, frameHeight)
 
 	plasma.scope(fn)
 
