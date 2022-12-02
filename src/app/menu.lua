@@ -8,5 +8,6 @@ local model = require(script.Parent.model)
 
 return plasma.widget(function(store)
 	trackPosition(store)
+	plasma.space(0)
 	model(store)
 end)
