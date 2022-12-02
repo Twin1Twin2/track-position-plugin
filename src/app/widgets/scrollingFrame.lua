@@ -9,12 +9,14 @@ local MAX_SIZE = Vector2.new(1500, 500)
 return plasma.widget(function(fn, options)
 	options = options or {}
 
+	local height = options.height or UDim.new(1, 0)
+
 	local refs = plasma.useInstance(function(ref)
 		plasma.create("Frame", {
 			[ref] = "frame",
 			BackgroundTransparency = 1,
 			Position = UDim2.new(0, 0, 0, 0),
-			Size = UDim2.new(1, 0, 1, 0),
+			Size = UDim2.new(1, 0, height.Scale, height.Offset),
 
 			plasma.create("ScrollingFrame", {
 				[ref] = "container",
