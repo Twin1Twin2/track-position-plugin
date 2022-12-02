@@ -5,6 +5,13 @@ local PositionModelType = {
 	UseVertical = 2,
 }
 
+local PositionModelTypeNames = {
+	"Normal",
+	"UseLookVector",
+	"UseVertical",
+}
+
+
 local function getLookVectorCFrame(cframe: CFrame)
 	local p = cframe.Position
 	local lv = cframe.LookVector
@@ -35,6 +42,7 @@ end
 
 return {
 	PositionModelType = PositionModelType,
+	PositionModelTypeNames = PositionModelTypeNames,
 	position = function(model: Model, cframe: CFrame, positionModelType: number, offset: Vector3?, flip: boolean)
 		offset = offset or model:GetAttribute("PositionOffset") or Vector3.new(0, 0, 0)
 		cframe = cframe * CFrame.new(offset)
