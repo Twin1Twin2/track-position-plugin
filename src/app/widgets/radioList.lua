@@ -16,10 +16,10 @@ local radioButton = plasma.widget(function(text, options)
 	local refs = plasma.useInstance(function(ref)
 		local style = plasma.useStyle()
 
-		local Checkbox = plasma.create("Frame", {
-			[ref] = "checkbox",
+		local RadioButton = plasma.create("Frame", {
+			[ref] = "radioButton",
 			BackgroundTransparency = 1,
-			Name = "Checkbox",
+			Name = "RadioButton",
 			Size = UDim2.new(0, 30, 0, 30),
 			AutomaticSize = Enum.AutomaticSize.X,
 
@@ -57,10 +57,10 @@ local radioButton = plasma.widget(function(text, options)
 			}),
 		})
 
-		return Checkbox
+		return RadioButton
 	end)
 
-	local instance = refs.checkbox
+	local instance = refs.radioButton
 
 	instance.TextLabel.Text = text
 	instance.ImageButton.AutoButtonColor = not options.disabled
