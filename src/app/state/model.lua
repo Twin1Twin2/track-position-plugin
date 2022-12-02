@@ -6,6 +6,10 @@ local rodux = require(packages.rodux)
 local modules = root.modules
 local tableUtil = require(modules.tableUtil)
 
+local pluginActions = root.pluginActions
+local positionModel = require(pluginActions.positionModel)
+local PositionModelTypeNames = positionModel.PositionModelTypeNames
+
 local module = {}
 local actions = {}
 local actionHandlers = {}
@@ -15,6 +19,8 @@ export type ModelState = {
 	modelParent: Instance | nil,
 
 	showPreview: boolean,
+
+	positionModelType: string,
 }
 
 local initialState: ModelState = {
@@ -22,6 +28,8 @@ local initialState: ModelState = {
 	modelParent = workspace,
 
 	showPreview = true,
+
+	positionModelType = PositionModelTypeNames[1],
 }
 
 -- SetModel
@@ -65,6 +73,21 @@ actionHandlers.SetShowPreview = function(state: ModelState, action)
 	state = state or tableUtil.copy(initialState)
 
 	state.showPreview = action.showPreview
+
+	return state
+end
+
+-- SetPositionModelType
+actions.setPositionModelType = rodux.makeActionCreator("SetPositionModelType", function(positionModelType: string)
+	return {
+		positionModelType = positionModelType,
+	}
+end)
+
+actionHandlers.SetPositionModelType = function(state: ModelState, action)
+	state = state or PositionModelTypeNames[1]
+
+	state.positionModelType = action.positionModelType
 
 	return state
 end

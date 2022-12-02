@@ -34,12 +34,15 @@ return plasma.widget(function(store)
 
 	local showPreview = modelState.showPreview
 
+	local positionModelTypeName = modelState.positionModelType
+
 	local trackPositionState = state.trackPosition
 
 	local currentTrackData = trackPositionState.trackData
 	local currentTrackPosition = trackPositionState.trackPosition
 
 	local currentIsVisible = trackPositionState.isVisible
+
 
 	plasma.label("Current Model:")
 	local currentModelName = if currentModel then currentModel.Name else "[NONE]"
@@ -104,11 +107,10 @@ return plasma.widget(function(store)
 
 	plasma.label("Position Type:")
 
-	local positionModelTypeName, setPositionModelTypeName = plasma.useState(PositionModelTypeNames[1])
 	local positionTypeNameRadioList = radioList(PositionModelTypeNames, positionModelTypeName)
 	local positionTypeNameSelection = positionTypeNameRadioList:selected()
 	if positionTypeNameSelection then
-		setPositionModelTypeName(positionTypeNameSelection)
+		store:dispatch(modelActions.setPositionModelType(positionTypeNameSelection))
 	end
 
 	plasma.space(10)
