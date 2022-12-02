@@ -60,7 +60,7 @@ return plasma.widget(function(text: string)
 				Size = UDim2.new(0, 40, 0, 40),
 				AutomaticSize = Enum.AutomaticSize.X,
 
-				Font = Enum.Font.SourceSans,
+				Font = Enum.Font.GothamMedium,
 				TextColor3 = style.textColor,
 				TextXAlignment = Enum.TextXAlignment.Center,
 				TextSize = 21,
@@ -82,7 +82,7 @@ return plasma.widget(function(text: string)
 				Size = UDim2.new(0, 40, 0, 40),
 				AutomaticSize = Enum.AutomaticSize.X,
 
-				Font = Enum.Font.SourceSans,
+				Font = Enum.Font.GothamMedium,
 				TextColor3 = style.textColor,
 				TextXAlignment = Enum.TextXAlignment.Center,
 				TextSize = 21,
