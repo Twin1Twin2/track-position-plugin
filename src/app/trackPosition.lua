@@ -19,6 +19,7 @@ local selectedText = require(widgets.selectedText)
 local button = require(widgets.button)
 local buttonRow = require(widgets.buttonRow)
 local textInput = require(widgets.textInput)
+local incrementTextInput = require(widgets.incrementTextInput)
 
 return plasma.widget(function(store)
 	local state = store:getState()
@@ -58,7 +59,11 @@ return plasma.widget(function(store)
 	end)
 
 	plasma.label("Current Position:")
-	local currentPositionWidget = textInput(tostring(currentTrackPosition))
+	local currentPositionWidget = incrementTextInput(tostring(currentTrackPosition))
+
+	local function setCurrentPosition(newPosition: number)
+		store:dispatch(trackPositionActions.resetTrackHandlesPosition(newPosition))
+	end
 
 	currentPositionWidget:focusLost(function(input: string, enterPressed: boolean)
 		if enterPressed == false then
@@ -70,11 +75,27 @@ return plasma.widget(function(store)
 			return
 		end
 
-		store:dispatch(trackPositionActions.resetTrackHandlesPosition(newPosition))
+		setCurrentPosition(newPosition)
 	end)
 
+	if currentPositionWidget:incrementClicked() then
+		setCurrentPosition(currentTrackPosition + currentMoveIncrement)
+	end
+
+	if currentPositionWidget:decrementClicked() then
+		setCurrentPosition(currentTrackPosition - currentMoveIncrement)
+	end
+
 	plasma.label("Current Index:")
-	local currentIndexWidget = textInput(tostring(currentPointIndex))
+	local currentIndexWidget = incrementTextInput(tostring(currentPointIndex))
+
+	local function setPointIndex(newIndex)
+		if math.floor(newIndex) ~= newIndex then
+			return
+		end
+
+		store:dispatch(trackPositionActions.setPointIndex(newIndex))
+	end
 
 	currentIndexWidget:focusLost(function(input: string, enterPressed: boolean)
 		if enterPressed == false then
@@ -86,12 +107,16 @@ return plasma.widget(function(store)
 			return
 		end
 
-		if math.floor(newIndex) ~= newIndex then
-			return
-		end
-
-		store:dispatch(trackPositionActions.setPointIndex(newIndex))
+		setPointIndex(newIndex)
 	end)
+
+	if currentIndexWidget:incrementClicked() then
+		setPointIndex(currentPointIndex + 1)
+	end
+
+	if currentIndexWidget:decrementClicked() then
+		setPointIndex(currentPointIndex - 1)
+	end
 
 	plasma.label("Move Increment:")
 	local moveIncrementWidget = textInput(tostring(currentMoveIncrement))
