@@ -50,10 +50,10 @@ local function getPointInstances(instance: Instance, startsAtZero: boolean?)
 	local startIndex = startsAtZero == true and 0 or 1
 	local endIndex = startsAtZero == true and numPoints - 1 or numPoints
 
-	local pointInstanceMap = {} -- new Map<number, Instance>()
+	local pointInstanceMap = {} :: {[number]: Instance} -- new Map<number, Instance>()
 
-	local duplicatePoints = {} -- as number[]
-	local invalidIndexes = {} -- as string[]
+	local duplicatePoints = {} :: {number} -- as number[]
+	local invalidIndexes = {} :: {string} -- as string[]
 
 	for _, child in ipairs(instance:GetChildren()) do
 		local index = tonumber(child.Name)
@@ -81,8 +81,8 @@ local function getPointInstances(instance: Instance, startsAtZero: boolean?)
 		pointInstanceMap[index] = child
 	end
 
-	local pointInstances = {} -- as Instance[]
-	local missingPoints = {} -- as number[]
+	local pointInstances = {} :: {Instance} -- as Instance[]
+	local missingPoints = {} :: {number} -- as number[]
 
 	-- look for missing points
 	for index = startIndex, numPoints, 1 do
@@ -138,7 +138,7 @@ end
 --- @function getPoints
 --- @within PointsUtil
 --- @param pointInstances {Instance}
---- @param getData (instance: Instance) -> T
+--- @param getData (instance: Instance) -> Result<T, string>
 --- @return Result<{T}, {PointIndexError}>
 local function getPoints<T>(pointInstances: {Instance}, getData: (instance: Instance) -> Result.Result)
 	local points: {T} = {}
@@ -188,7 +188,7 @@ local function getVector3PointsFromInstance(instance: Instance)
 
 	local pointInstances = pointInstancesResult:unwrap()
 
-	local pointsResult = getVector3Points(pointInstances, getVector3FromInstance)
+	local pointsResult = getVector3Points(pointInstances)
 	if pointsResult:isErr() then
 		return Result.err(
 			("could not convert all points to Vector3s! Errors: %s"):format(serializeGetPointsResult(pointsResult:unwrapErr()))
@@ -222,7 +222,7 @@ local function getCFramePointsFromInstance(instance: Instance)
 
 	local pointInstances = pointInstancesResult:unwrap()
 
-	local pointsResult = getCFramePoints(pointInstances, getCFrameFromInstance)
+	local pointsResult = getCFramePoints(pointInstances)
 	if pointsResult:isErr() then
 		return Result.err(
 			("could not convert all points to CFrames! Errors: %s"):format(serializeGetPointsResult(pointsResult:unwrapErr()))
