@@ -29,7 +29,7 @@ type PointInstancesResult = {
 }
 
 local function serializePointInstancesResult(result: PointInstancesResult)
-	return ("startIndex: %i; endIndex: %i; duplicatePoints: %i; invalidIndexes: %i; missingPoints: %i"):format(result.startIndex, result.endIndex, #result.duplicatePoints, #result.invalidIndexes, #result.missingPoints)
+	return `startIndex: {result.startIndex}; endIndex: {result.endIndex}; #duplicatePoints: {#result.duplicatePoints}; #invalidIndexes: {#result.invalidIndexes}; #missingPoints: {#result.missingPoints}`
 end
 
 --- Converts an Instance's children into an array of Instances
